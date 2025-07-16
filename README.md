@@ -1,42 +1,22 @@
 # ESM FullStack Challenge
-Challenge for ESM FullStack candidates
+## ✅ Task 1 – Implement Driver CRUD Functionality
 
-## Overview:
-You are tasked with updating a Formula One Web App. The backend is written in Python (FastAPI), the frontend is written in JavaScript (React-Admin), and the underlying data is housed in a SQLite DB. There are multiple ways to complete this assessment, but we ask that you update both the frontend and backend so that we can comprehensively assess the skills required for this role. Please select one (or more) of the following options to complete:
-1. The Web App is currently read-only. In order to keep data up-to-date, we would like you to upgrade the Web App from a read-only app to a simple CRUD app. Please update the 'Drivers' UI and API with the following capabilities: Create a new driver, Update a pre-existing driver, and Delete a pre-existing driver. You can find related code in `dashboard/src/pages/drivers.tsx` and `esm_fullstack_challenge/routers/drivers.py`.
-2. The current UI/UX of the Web App feels disconnected. In order to remedy this, please update the 'Races' UI/UX. When clicking on a race for a more detailed view, please create a tabbed view displaying data related to the race. Please display data related to the race circuit, race drivers, and race constructors. You can find related code in `dashboard/src/pages/races.tsx` and `esm_fullstack_challenge/routers/races.py`.
-3. The Web App does not display data in a meaningful way. Please add a dashboard that provides easy to digest insights. There should be at least 2 or more visualizations. You can find related code in `dashboard/src/pages/dashboard.tsx` and `esm_fullstack_challenge/routers/dashboard.py`.
-4. The Web App currently uses a static JSON file for authentication. Please add proper user authentication and management. You can find related code in `dashboard/src/authProvider.ts`.
-5. Improve a backend/frontend feature of your choosing. If you choose this route, please include a brief description of the work completed.
+As part of the ESM FullStack challenge, I implemented Create, Update, and Delete operations for the **Drivers** resource. This involved modifying both the FastAPI backend and the React-Admin frontend.
 
-This challenge is meant to take anywhere from 1-4 hours and this will be taken into consideration when reviewing any work submitted.
+### 🔧 Backend (FastAPI - `routers/drivers.py`)
 
-## Getting Started
-The easiest way to get started is by running the following command:
-```
-make run
-```
-This uses Docker Compose to launch two containerized services (`ui`, `api`) and mounts the `dashboard/src` and `esm_fullstack_challenge` folders which enables hot reload of the files as you work on them.
+- Created a `DriverIn` Pydantic model to handle driver input data.
+- Added the following endpoints:
+  - `POST /drivers` – Inserts a new driver into the database.
+  - `PUT /drivers/{id}` – Updates an existing driver's information based on ID.
+  - `DELETE /drivers/{id}` – Deletes a driver entry if it exists.
+- Used a helper function `row_to_dict()` to safely map database rows to dictionaries for response parsing.
+- Reused existing GET routes for listing and retrieving individual drivers.
 
+### 💻 Frontend (React Admin - `pages/drivers.tsx`)
 
-Alternatively, you can launch the applications individually by running:
-```
-make api
-```
-and (in a separate terminal)
-```
-make ui
-```
-This launches the applications without docker but requires you to have Python (v3.13+), NodeJS (v22.17.0+), and Yarn (v1.22.22+) installed.
+- Implemented `DriverCreate` and `DriverEdit` views using `SimpleForm` and `TextInput`.
+- Required fields are validated using `validate={required()}` for inputs like `driver_ref`, `forename`, `surname`, and `dob`.
+- Existing components `DriverList` and `DriverShow` were retained and integrated with the new create/edit functionality.
 
-## Submitting Work
-Please create a public GitHub repo and share the link via email.
-
-## Criteria
-* The bare minimum requirement is that the Web App is able to run using the following command:
-    ```
-    make run
-    ```
-* Software development best practices are encouraged, but not required.
-* Any documentation provided will help us better understand your work.
-* Please take no longer than 72 hours to complete the challenge once you have begun.
+These changes made the "Drivers" section of the app fully editable and CRUD-enabled through the admin dashboard, using the existing database schema without needing structural updates.
