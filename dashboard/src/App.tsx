@@ -17,7 +17,7 @@ import { authProvider } from "./authProvider";
 import { dataProvider } from "./dataProvider";
 
 import { RaceList, RaceShow } from "./pages/races";
-import { DriverList, DriverShow } from "./pages/drivers";
+import { DriverCreate, DriverList, DriverShow, DriverEdit } from "./pages/drivers";
 
 export const App = () => (
   <Admin
@@ -37,6 +37,8 @@ export const App = () => (
       name="drivers"
       list={DriverList}
       show={DriverShow}
+      edit={DriverEdit}
+      create={DriverCreate}
     />
     <Resource
       icon={Filter1Icon}

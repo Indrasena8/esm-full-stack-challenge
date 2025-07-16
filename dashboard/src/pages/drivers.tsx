@@ -6,6 +6,11 @@ import {
   SimpleShowLayout,
   TextField,
   UrlField,
+  Edit,
+  SimpleForm,
+  TextInput,
+  Create,
+  required,
 } from "react-admin";
 
 export const DriverList = () => (
@@ -42,4 +47,36 @@ export const DriverShow = () => (
       <UrlField source="url" />
     </SimpleShowLayout>
   </Show>
+);
+
+export const DriverEdit = () => (
+  <Edit>
+    <SimpleForm>
+      <TextInput disabled source="id" />
+      <TextInput source="driver_ref" validate={required()} />
+      <TextInput source="number" />
+      <TextInput source="code" />
+      <TextInput source="forename" validate={required()} />
+      <TextInput source="surname" validate={required()} />
+      <TextInput source="dob" label="Date of Birth (YYYY-MM-DD)" validate={required()} />
+      <TextInput source="nationality" />
+      <TextInput source="url" fullWidth />
+    </SimpleForm>
+  </Edit>
+);
+
+/* ---------- CREATE ---------- */
+export const DriverCreate = () => (
+  <Create>
+    <SimpleForm>
+      <TextInput source="driver_ref" validate={required()} />
+      <TextInput source="number" />
+      <TextInput source="code" />
+      <TextInput source="forename" validate={required()} />
+      <TextInput source="surname" validate={required()} />
+      <TextInput source="dob" label="Date of Birth (YYYY-MM-DD)" validate={required()} />
+      <TextInput source="nationality" />
+      <TextInput source="url" fullWidth />
+    </SimpleForm>
+  </Create>
 );
