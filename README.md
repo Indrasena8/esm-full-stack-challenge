@@ -5,7 +5,7 @@ As part of the ESM FullStack challenge, I implemented Create, Update, and Delete
 
 ### Backend (FastAPI - `routers/drivers.py`)
 
-- Created a `DriverIn` Pydantic model to handle driver input data.
+- Created a `Driver` in Pydantic model to handle driver input data.
 - Added the following endpoints:
   - `POST /drivers` – Inserts a new driver into the database.
   - `PUT /drivers/{id}` – Updates an existing driver's information based on ID.
