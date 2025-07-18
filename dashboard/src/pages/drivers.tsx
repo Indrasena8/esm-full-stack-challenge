@@ -54,29 +54,28 @@ export const DriverEdit = () => (
     <SimpleForm>
       <TextInput disabled source="id" />
       <TextInput source="driver_ref" validate={required()} />
-      <TextInput source="number" />
-      <TextInput source="code" />
+      <TextInput source="number" validate={required()} />
+      <TextInput source="code" validate={required()} />
       <TextInput source="forename" validate={required()} />
       <TextInput source="surname" validate={required()} />
       <TextInput source="dob" label="Date of Birth (YYYY-MM-DD)" validate={required()} />
-      <TextInput source="nationality" />
-      <TextInput source="url" fullWidth />
+      <TextInput source="nationality" validate={required()} />
+      <TextInput source="url" fullWidth validate={required()} />
     </SimpleForm>
   </Edit>
 );
 
-/* ---------- CREATE ---------- */
 export const DriverCreate = () => (
   <Create>
     <SimpleForm>
       <TextInput source="driver_ref" validate={required()} />
-      <TextInput source="number" />
-      <TextInput source="code" />
+      <TextInput source="number" validate={required()} />
+      <TextInput source="code" validate={required()} />
       <TextInput source="forename" validate={required()} />
       <TextInput source="surname" validate={required()} />
       <TextInput source="dob" label="Date of Birth (YYYY-MM-DD)" validate={required()} />
-      <TextInput source="nationality" />
-      <TextInput source="url" fullWidth />
+      <TextInput source="nationality" validate={required()} />
+      <TextInput source="url" fullWidth validate={required()} />
     </SimpleForm>
   </Create>
 );

@@ -12,8 +12,8 @@ Driver = AutoGenModels["drivers"]
 
 class DriverIn(BaseModel):
     driver_ref: str
-    number: int | None = None
-    code: str | None = None
+    number: str
+    code: str
     forename: str
     surname: str
     dob: str
@@ -23,7 +23,6 @@ class DriverIn(BaseModel):
 def row_to_dict(cursor, row):
     return {col[0]: row[idx] for idx, col in enumerate(cursor.description)}
 
-# ------------- existing GET routes -----------------
 get_driver = get_route_id_function('drivers', Driver)
 drivers_router.add_api_route(
     '/{id}', get_driver,
@@ -38,16 +37,24 @@ drivers_router.add_api_route(
 
 @drivers_router.post("", response_model=Driver, status_code=status.HTTP_201_CREATED)
 def create_driver(payload: DriverIn, db: DB = Depends(get_db)):
-    cols = ", ".join(payload.dict().keys())
-    marks = ", ".join(["?"] * len(payload.dict()))
-    values = tuple(payload.dict().values())
-
     with db.get_connection() as conn:
+        cursor = conn.execute("SELECT MAX(id) FROM drivers")
+        max_id = cursor.fetchone()[0]
+        new_id = (max_id or 0) + 1
+
+        driver_data = payload.dict()
+        driver_data["id"] = new_id
+
+        cols = ", ".join(driver_data.keys())
+        marks = ", ".join(["?"] * len(driver_data))
+        values = tuple(driver_data.values())
+
         cursor = conn.execute(f"INSERT INTO drivers ({cols}) VALUES ({marks})", values)
-        new_id = cursor.lastrowid
+
         cursor = conn.execute("SELECT * FROM drivers WHERE id = ?", (new_id,))
         row = cursor.fetchone()
         driver_dict = row_to_dict(cursor, row)
+
     return Driver(**driver_dict)
 
 @drivers_router.put("/{id}", response_model=Driver)
@@ -64,6 +71,7 @@ def update_driver(id: int, payload: DriverIn, db: DB = Depends(get_db)):
         driver_dict = row_to_dict(cursor, row)
     return Driver(**driver_dict)
 
+# DELETE /drivers/{id}
 @drivers_router.delete("/{id}", response_model=Driver)
 def delete_driver(id: int, db: DB = Depends(get_db)):
     with db.get_connection() as conn:
